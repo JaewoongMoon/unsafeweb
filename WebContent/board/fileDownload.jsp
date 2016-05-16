@@ -15,17 +15,14 @@ Logger log = Logger.getLogger("[파일다운로드]");
 String fileName = request.getParameter("fileName");
 //String filePath = request.getParameter("filePath");
 
-log.debug(fileName + "의 파일스트림을 생성합니다..");
-// 
+/*
 ServletContext context = getServletContext();
-
 String realDirectory = context.getRealPath("File");
-
-
 log.debug("실제 디렉: " + realDirectory);
-
+*/
 try{
-	String filePath = "D:\\fileuploads/"+fileName;
+	String filePath = "C:\\Users\\jwmoon\\workspace\\unsafeweb\\WebContent\\fileuploads\\"+fileName;
+	log.debug(filePath + "의 파일스트림을 생성합니다..");
 	File file = new File(filePath);
 	byte b[] = new byte[4096];
 	

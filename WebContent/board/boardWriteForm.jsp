@@ -72,9 +72,9 @@
 			<tr>
 				<td colspan="2">
 					<textarea name="contents" cols="80" rows="10"></textarea>
-					<script>
+					<!-- <script>
 					CKEDITOR.replace('contents');
-					</script>
+					</script> -->
 				</td>
 			</tr>
 		</tbody>

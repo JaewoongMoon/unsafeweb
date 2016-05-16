@@ -96,7 +96,7 @@
 				}
 				
 			}else{
-				String dirPath = "D:\\fileuploads";
+				String dirPath = "C:\\Users\\jwmoon\\workspace\\unsafeweb\\WebContent\\fileuploads";
 				//String dirPath = "FILE_UPLOAD";
 				//log.debug("파일명 : " + item.getName());
 				fileName = item.getName();
