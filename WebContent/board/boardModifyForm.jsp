@@ -89,6 +89,7 @@ if(userid.equals("")){
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <title>게시판 수정 폼</title>
 <script type="text/javascript" src="<%=request.getContextPath()%>/ckeditor/ckeditor.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-1.12.3.min.js"></script>
 <style type="text/css">
 	* {font-size: 9pt;}
 	p {width: 600px; text-align: right;}

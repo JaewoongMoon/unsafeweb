@@ -11,7 +11,7 @@
 	.btn_align {width: 600px; text-align: right;}
 	table tbody tr th {background-color: gray;}
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="/js/jquery-1.12.3.min.js"></script>
 <script type="text/javascript">
 	function goUrl(url) {
 		location.href=url;

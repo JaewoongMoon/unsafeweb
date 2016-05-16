@@ -121,7 +121,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-1.12.3.min.js"></script>
 <title>게시판 목록</title>
 <style type="text/css">
 	* {font-size: 9pt;}
