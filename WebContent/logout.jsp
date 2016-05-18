@@ -16,6 +16,7 @@ for(int i=0; i< cookies.length; i++){
 	}
 }
 
+session.invalidate();
 %>    
 <script>
 alert('로그아웃 되었습니다.');
