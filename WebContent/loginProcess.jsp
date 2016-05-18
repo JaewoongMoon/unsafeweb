@@ -24,11 +24,12 @@ if(userid == null || passwd == null){
 		"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
 	
 	String sql = "SELECT * FROM member "+ 
-			"WHERE userid = '" + userid + "' and passwd = '" + passwd +"'";
-	
+//			"WHERE userid = '" + userid + "' and passwd = '" + passwd +"'";
+                    "WHERE userid = ? and passwd = ?";	
 	log.info("SQL : " + sql);
 	pstmt = conn.prepareStatement(sql);
-	//pstmt.setString(1, num);
+	pstmt.setString(1, userid);
+        pstmt.setString(2, passwd);
 	rs = pstmt.executeQuery();
 	
 	if(!rs.next()){

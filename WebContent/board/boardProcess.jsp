@@ -1,3 +1,5 @@
+<%@page import="filter.LucyFilter"%>
+<%@page import="com.nhncorp.lucy.security.xss.XssFilter"%>
 <%@page import="java.nio.charset.Charset"%>
 <%@page import="org.apache.commons.fileupload.util.Streams"%>
 <%@page import="java.io.InputStream"%>
@@ -70,6 +72,9 @@
 	
 	List<FileItem> items = upload.parseRequest(request);
 
+	//XssFilter xf = XssFilter.getInstance("lucy-xss-superset.xml");
+	XssFilter xf = LucyFilter.lucyFilter;
+	
 	if(items != null){
 		for(FileItem item : items){
 			
@@ -81,8 +86,17 @@
 					mode = item.getString();
 				}else if(fieldname.equals("subject")){
 					subject = new String( item.getString().getBytes("8859_1"), Charset.forName("UTF-8"));
+					
+					log.debug("제목 필터링 전 : " + subject);
+					
+					subject = xf.doFilter(subject);
+					
+					log.debug("제목 필터링 후 : " +  subject);
+					
 				}else if(fieldname.equals("contents")){
 					contents = new String( item.getString().getBytes("8859_1"), Charset.forName("UTF-8"));
+					contents = xf.doFilter(contents);
+					
 				}else if(fieldname.equals("num")){
 					num = item.getString();
 				}else if(fieldname.equals("pageNum")){
@@ -98,10 +112,17 @@
 			}else{
 				String dirPath = "C:\\Users\\jwmoon\\workspace\\unsafeweb\\WebContent\\fileuploads";
 				//String dirPath = "FILE_UPLOAD";
-				//log.debug("파일명 : " + item.getName());
+				log.debug("파일명 : " + item.getName());
 				fileName = item.getName();
+
+
 				if(fileName != null && !fileName.equals("")){
 					
+                                    if(fileName.toLowerCase().endsWith(".jpg") ||
+                                        fileName.toLowerCase().endsWith(".png") ||
+                                        fileName.toLowerCase().endsWith(".gif") ||
+                                        fileName.toLowerCase().endsWith(".jpeg")){
+
 					File directory = new File(dirPath);
 					if(!directory.exists()){
 						directory.mkdir();
@@ -113,8 +134,11 @@
 					if(uploadFile != null){
 						item.write(uploadFile);						
 					}
-					//log.debug("사이즈 : " + item.getSize());
-					}
+					log.debug("사이즈 : " + item.getSize());
+					}else{
+                                            fileName = "";
+                                        }
+                                }
 			}
 		}
 	}

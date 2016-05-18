@@ -1,3 +1,5 @@
+<%@page import="filter.LucyFilter"%>
+<%@page import="com.nhncorp.lucy.security.xss.XssFilter"%>
 <%@page import="org.apache.log4j.Logger"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
@@ -51,21 +53,21 @@
 	if (!"".equals(searchText)) {
 		if ("ALL".equals(searchType)) {
 			countWhereSQL = " WHERE SUBJECT LIKE CONCAT('%',?,'%') OR WRITER LIKE CONCAT('%',?,'%') OR CONTENTS LIKE CONCAT('%',?,'%') ";
-			whereSQL = " WHERE SUBJECT LIKE CONCAT('%"+searchTextUTF8+"%')" 
-					+ "OR WRITER LIKE CONCAT('%"+searchTextUTF8 +"%') "
-					+ "OR CONTENTS LIKE CONCAT('%"+searchTextUTF8+"%') ";
+			whereSQL = " WHERE SUBJECT LIKE CONCAT('%',?,'%')" 
+					+ "OR WRITER LIKE CONCAT('%',?,'%') "
+					+ "OR CONTENTS LIKE CONCAT('%',?,'%') ";
 		} else if ("SUBJECT".equals(searchType)) {
 			countWhereSQL = " WHERE SUBJECT LIKE CONCAT('%',?,'%') ";
-			whereSQL = " WHERE SUBJECT LIKE CONCAT('%"+searchTextUTF8+"%') ";
+			whereSQL = " WHERE SUBJECT LIKE CONCAT('%',?,'%') ";
 		} else if ("WRITER".equals(searchType)) {
 			countWhereSQL = " WHERE WRITER LIKE CONCAT('%',?,'%') ";
-			whereSQL = " WHERE WRITER LIKE CONCAT('%"+ searchTextUTF8 +"%') ";
+			whereSQL = " WHERE WRITER LIKE CONCAT('%',?,'%') ";
 		} else if ("CONTENTS".equals(searchType)) {
-			whereSQL = " WHERE CONTENTS LIKE CONCAT('%"+ searchTextUTF8 + "%') ";
+			whereSQL = " WHERE CONTENTS LIKE CONCAT('%',?,'%') ";
 			countWhereSQL = " WHERE CONTENTS LIKE CONCAT('%',?,'%') ";
 		}
 	}
-	//try {
+        try {
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(
@@ -85,36 +87,41 @@
 		rs = pstmt.executeQuery();
 		rs.next();
 		int totalCount = rs.getInt("TOTAL");
+                log.debug("총 조회 건수 :" + totalCount) ;
 		// 게시물 목록을 얻는 쿼리 실행
-		int startIndex = listCount * (pageNumTemp-1);
-		int endIndex = listCount;
-		String listQuery = "SELECT NUM, SUBJECT, WRITER, REG_DATE, HIT, IS_SECRET FROM BOARD "+whereSQL+" ORDER BY NUM DESC LIMIT " + startIndex +","
-				+ endIndex;
+//		int startIndex = listCount * (pageNumTemp-1);
+//		int endIndex = listCount;
+		String listQuery = "SELECT NUM, SUBJECT, WRITER, REG_DATE, HIT, IS_SECRET FROM BOARD "+whereSQL+" ORDER BY NUM DESC LIMIT ? , ?";
+
 		log.debug("게시물 조회쿼리 : " + listQuery);
 		pstmt = conn.prepareStatement(listQuery);
-		/*
+		log.debug("검색 타입 :" + searchType);
 		if (!"".equals(whereSQL)) {
 			// 전체검색일시
 			if ("ALL".equals(searchType)) {
+                                log.debug("case 1");
 				pstmt.setString(1, searchTextUTF8);
 				pstmt.setString(2, searchTextUTF8);
 				pstmt.setString(3, searchTextUTF8);
 				pstmt.setInt(4, listCount * (pageNumTemp-1));
 				pstmt.setInt(5, listCount);			
 			} else {
+                            log.debug("case 2");
 				pstmt.setString(1, searchTextUTF8);
 				pstmt.setInt(2, listCount * (pageNumTemp-1));
 				pstmt.setInt(3, listCount);			
 			}
 		} else {	
+                    log.debug("case 3");
 			pstmt.setInt(1, listCount * (pageNumTemp-1));
 			pstmt.setInt(2, listCount);
 		}
-		*/
-		//pstmt.setInt(1, listCount * (pageNumTemp-1));
-		//pstmt.setInt(2, listCount);
+		
+//		pstmt.setInt(1, listCount * (pageNumTemp-1));
+//		pstmt.setInt(2, listCount);
 		rs = pstmt.executeQuery();
 		
+		XssFilter xf = LucyFilter.lucyFilter;
 		
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -222,7 +229,7 @@
 				<td align="center"><%=totalCount - i + 1 - (pageNumTemp - 1) * listCount %></td>
 				<td>
 					<a href="javascript:goDetail('<%=rs.getInt("NUM")%>','<%=pageNumTemp%>','<%=searchType%>', '<%=searchText%>' )">
-					<%=rs.getString("SUBJECT") %></a>					
+					<%= xf.doFilter(rs.getString("SUBJECT")) %></a>					
 				</td>
 				<td align="center"><%=rs.getString("WRITER") %></td>
 				<td align="center"><%=rs.getString("REG_DATE").substring(0, 10) %></td>
@@ -321,7 +328,7 @@
 </body>
 </html>
 <%
-/*
+
 	} catch (Exception e) {
 		e.printStackTrace();
 	} finally {
@@ -329,5 +336,5 @@
 		if (pstmt != null) pstmt.close();
 		if (conn != null) conn.close();
 	}
-	*/
+	
 %>

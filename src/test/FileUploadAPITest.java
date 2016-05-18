@@ -32,7 +32,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class FileUploadAPITest {
 
 	public static void main(String[] args) {
-		
+		/*
 		String dirPath = "FILE_upload";
 		//log.debug("파일명 : " + item.getName());
 		String fileName = "test.txt";
@@ -41,5 +41,10 @@ public class FileUploadAPITest {
 			directory.mkdir();
 			System.out.println("DONE");
 		}
+		*/
+		
+		String fileName = "demo.aspx";
+		fileName = fileName.replaceAll("../", "");
+		System.out.println(fileName.toLowerCase().endsWith(".jpg"));
 	}
 }

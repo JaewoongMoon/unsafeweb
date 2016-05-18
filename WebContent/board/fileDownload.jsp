@@ -14,7 +14,9 @@ Logger log = Logger.getLogger("[파일다운로드]");
 
 String fileName = request.getParameter("fileName");
 //String filePath = request.getParameter("filePath");
-
+log.debug("파일명 필터링 전 :" +fileName);
+fileName = fileName.replaceAll("../","");
+log.debug("파일명 필터링 후 : " +fileName);
 /*
 ServletContext context = getServletContext();
 String realDirectory = context.getRealPath("File");

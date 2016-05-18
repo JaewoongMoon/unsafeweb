@@ -1,3 +1,5 @@
+<%@page import="filter.LucyFilter"%>
+<%@page import="com.nhncorp.lucy.security.xss.XssFilter"%>
 <%@page import="org.apache.log4j.Logger"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
@@ -123,6 +125,7 @@
 			}
 		}
 		
+		XssFilter xf = LucyFilter.lucyFilter;
 		/***********************************************************************************/
 		// 조회수 증가 쿼리 실행
 		pstmt = conn.prepareStatement("UPDATE BOARD SET HIT = HIT + 1 WHERE NUM = ?");
@@ -151,7 +154,7 @@
 		<tbody>
 			<tr>
 				<th align="center">제목</th>
-				<td><%=rs.getString("SUBJECT") %></td>
+				<td><%= xf.doFilter(rs.getString("SUBJECT")) %></td>
 			</tr>
 			<tr>
 				<th align="center">작성자/조회수</th>
@@ -166,7 +169,7 @@
 				<td><a href="javascript:file_download('<%=rs.getString("FILE_NAME") %>');" ><%=rs.getString("FILE_NAME") %></a></td>
 			</tr>
 			<tr>
-				<td colspan="2"><%=rs.getString("CONTENTS") %></td>
+				<td colspan="2"><%=xf.doFilter(rs.getString("CONTENTS")) %></td>
 			</tr>
 		</tbody>
 	</table>

@@ -25,6 +25,7 @@
 			return false;
 		}
 		
+/*
 		if( $("#addFile").val() != "" ){
 			var ext = $('#addFile').val().split('.').pop().toLowerCase();
 		    if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
@@ -32,7 +33,7 @@
 				 return false;
 		    }
 		}
-		
+*/		
 		return true;
 		
 		
