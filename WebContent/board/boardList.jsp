@@ -18,18 +18,6 @@
 	
 	/***************************************************************************/
 	// 세션 처리  
-//	Cookie[] cookies = request.getCookies();
-//	String userid = "";
-/*	if(cookies != null){
-		for(int i=0; i < cookies.length; i++){
-			if(cookies[i].getName().equals("userid")){
-				userid = cookies[i].getValue();
-			}
-		}
-	}
-	if(userid.equals("")){
-		response.sendRedirect(request.getContextPath() + "/index.jsp");
-	}*/
         String userid = "";
         if (session.getAttribute("id") == null){
             response.sendRedirect(request.getContextPath() + "/index.jsp");

@@ -20,26 +20,22 @@
 <%
 	Logger log = Logger.getLogger("[boardProcess]"); 
 	log.debug("=======================================");
+
 /**************************************************************************/
 // 세션 처리  
-Cookie[] cookies = request.getCookies();
 String userid = "";
-if(cookies != null){
-    for(int i=0; i < cookies.length; i++){
-	if(cookies[i].getName().equals("userid")){
-	    userid = cookies[i].getValue();
-	}
-    }
-}
-if(userid.equals("")){
+if (session.getAttribute("id") == null){
     response.sendRedirect(request.getContextPath() + "/index.jsp");
+} else{
+    userid = (String)session.getAttribute("id");
 }
 /**************************************************************************/
+// CSRF 토큰 
+String csrf_token = request.getParameter("csrf");
+//log.debug("CSRF 토큰 파라메터 :  " + csrf_token);
 
 
-
-	
-	
+/**************************************************************************/
 	
 	
 	//사용할 객체 초기화
@@ -86,6 +82,7 @@ if(userid.equals("")){
 				
 				if(fieldname.equals("mode")){
 					mode = item.getString();
+                                       log.debug("모드 : " + mode);
 				}else if(fieldname.equals("subject")){
 					subject = new String( item.getString().getBytes("8859_1"), Charset.forName("UTF-8"));
 					
@@ -109,6 +106,9 @@ if(userid.equals("")){
 					searchText = new String( item.getString().getBytes("8859_1"), Charset.forName("UTF-8"));
 				}else if(fieldname.equals("isSecret")){
 					isSecret = new String( item.getString().getBytes("8859_1"), Charset.forName("UTF-8"));
+				}else if(fieldname.equals("csrf")){
+				    csrf_token = item.getString();
+                                    log.debug("CSRF TOKEN : " + csrf_token);
 				}
 				
 			}else{
@@ -153,6 +153,16 @@ if(userid.equals("")){
 		log.debug("filename :" + uploadFile.getName());
 	*/
 	
+
+/**************************************************************************/
+// CSRF 토큰 인증 처리 
+if (!csrf_token.equals(session.getAttribute("CSRF_TOKEN"))){
+    log.debug("CSRF 토큰 값이 상이합니다.");
+    response.sendRedirect(request.getContextPath() + "/index.jsp");
+}
+/**************************************************************************/
+
+
 	String ip = request.getRemoteAddr();
 	//log.debug("ip : " + ip);
 	//log.debug("mode : " + mode);

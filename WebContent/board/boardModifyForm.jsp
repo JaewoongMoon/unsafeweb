@@ -7,19 +7,13 @@ Logger log = Logger.getLogger("[게시글 수정]");
 //접속한 유저의 권한 확인 
 /***************************************************************************/
 // 세션 처리  
-Cookie[] cookies = request.getCookies();
 String userid = "";
-if(cookies != null){
-    for(int i=0; i < cookies.length; i++){
-	if(cookies[i].getName().equals("userid")){
-	    userid = cookies[i].getValue();
-	}
-    }
-}
-if(userid.equals("")){
+if (session.getAttribute("id") == null){
     response.sendRedirect(request.getContextPath() + "/index.jsp");
+} else{
+    userid = (String)session.getAttribute("id");
 }
-/***************************************************************************/
+/**************************************************************************/
 
 
 	// 사용할 객체 초기화
@@ -127,12 +121,13 @@ if(userid.equals("")){
 </script>
 </head>
 <body>
-	<form name="boardModifyForm" action="boardProcess.jsp" method="post" onsubmit="return boardModifyCheck();">
+    <form name="boardModifyForm" action="boardProcess.jsp" method="post" onsubmit="return boardModifyCheck();" enctype="multipart/form-data">
 	<input type="hidden" name="mode" value="M" />
 	<input type="hidden" name="num" value="<%=num %>" />
 	<input type="hidden" name="pageNum" value="<%=pageNum %>" />
 	<input type="hidden" name="searchType" value="<%=searchType %>" />
 	<input type="hidden" name="searchText" value="<%=searchText %>" />
+        <input type="hidden" name="csrf" value="<%=session.getAttribute("CSRF_TOKEN")%>" />
 	<table border="1" summary="게시판 수정 폼">
 		<caption>게시판 수정 폼</caption>
 		<colgroup>
@@ -144,10 +139,10 @@ if(userid.equals("")){
 				<th align="center">제목</th>
 				<td><input type="text" name="subject" size="80" maxlength="100" value="<%=rs.getString("SUBJECT") %>" /></td>
 			</tr>
-			<tr>
+			<%-- <tr>
 				<th align="center">작성자</th>
 				<td><input type="text" name="writer" maxlength="20" value="<%=rs.getString("WRITER") %>" /></td>
-			</tr>
+			</tr>--%>
 			<tr>
 				<th align="center">첨부파일</th>
 				<td><input type="file" name="addFile" id="addFile" maxlength="20" /></td>

@@ -43,7 +43,7 @@
 <body>
 	<form name="boardWriteForm" action="boardProcess.jsp" method="post" onsubmit="return boardWriteCheck();" 
 	enctype="multipart/form-data">
-	
+	    <input type="hidden" name="csrf" value="<%=session.getAttribute("CSRF_TOKEN")%>" />
 	<input type="hidden" name="mode" value="W" />
 	<table border="1" summary="게시판 등록 폼">
 		<caption>게시판 등록 폼</caption>

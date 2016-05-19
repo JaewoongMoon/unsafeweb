@@ -21,7 +21,8 @@
 	// 삭제 체크
 	function deleteCheck(url) {
 		if (confirm('정말 삭제하시겠어요?')) {
-			location.href=url;
+			$("#deleteFrm").submit();
+                    //location.href=url;
 		}
 	}
 	
@@ -62,20 +63,14 @@
 		
             /**************************************************************************/
             // 세션 처리  
-            Cookie[] cookies = request.getCookies();
             String userid = "";
-            if(cookies != null){
-                for(int i=0; i < cookies.length; i++){
-	            if(cookies[i].getName().equals("userid")){
-	                userid = cookies[i].getValue();
-	            }
-                }
-            }
-            if(userid.equals("")){
+            if (session.getAttribute("id") == null){
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
+            } else{
+                userid = (String)session.getAttribute("id");
             }
-            /**************************************************************************/
-		
+	    /**************************************************************************/
+	    
 		
 		// 열람 가능한지 재 체크
 		
@@ -178,6 +173,14 @@
 		<input type="button" value="수정" onclick="goUrl('boardModifyForm.jsp?num=<%=num%>&amp;pageNum=<%=pageNum%>&amp;searchType=<%=searchType%>&amp;searchText=<%=searchText%>');" />
 		<input type="button" value="삭제" onclick="deleteCheck('boardProcess.jsp?mode=D&amp;num=<%=num%>&amp;pageNum=<%=pageNum%>&amp;searchType=<%=searchType%>&amp;searchText=<%=searchText%>');" />
 	</p>
+        <form method="post" action="boardProcess.jsp" name="deleteFrm" id="deleteFrm" enctype="multipart/form-data" >
+            <input type="hidden" name="mode" value="D" />
+            <input type="hidden" name="num" value="<%=num%>" />
+            <input type="hidden" name="pageNum" value="<%=pageNum%>" />
+            <input type="hidden" name="searchType" value="<%=searchType%>" />
+            <input type="hidden" name="searchText" value="<%=searchText%>" />
+            <input type="hidden" name="csrf" value="<%=session.getAttribute("CSRF_TOKEN")%>" />
+        </form>
 </body>
 </html>
 <%

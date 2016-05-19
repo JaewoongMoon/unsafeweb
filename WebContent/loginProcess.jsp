@@ -1,3 +1,4 @@
+<%@page import="java.util.UUID"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="org.apache.log4j.Logger" %>
@@ -50,6 +51,9 @@ if(userid == null || passwd == null){
                 session.setAttribute("id", userid);
 		log.info("jsessionid : " + session.getId());
 		log.info("로그인 ID : " + userid);
+                
+                // CSRF 토큰 발급 
+                session.setAttribute("CSRF_TOKEN", UUID.randomUUID().toString());
 //		Cookie cookie1 = new Cookie("userid", userid);
 //		Cookie cookie2 = new Cookie("passwd", passwd);
 //		cookie1.setMaxAge(20*60);
