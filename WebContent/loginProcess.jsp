@@ -45,15 +45,16 @@ if(userid == null || passwd == null){
 		//response.sendRedirect("index.jsp");
 	}else{
 		log.info("로그인 성공");
-		HttpSession newSession = request.getSession();
+//		HttpSession newSession = request.getSession();
 		//newSession.get
-		log.info("로그인 세션ID : " + newSession.getId());
-		
-		Cookie cookie1 = new Cookie("userid", userid);
+                session.setAttribute("id", userid);
+		log.info("jsessionid : " + session.getId());
+		log.info("로그인 ID : " + userid);
+//		Cookie cookie1 = new Cookie("userid", userid);
 //		Cookie cookie2 = new Cookie("passwd", passwd);
-		cookie1.setMaxAge(20*60);
+//		cookie1.setMaxAge(20*60);
 		
-		response.addCookie(cookie1);
+//		response.addCookie(cookie1);
 //		response.addCookie(cookie2);
 		response.sendRedirect("board/boardList.jsp");
 	}

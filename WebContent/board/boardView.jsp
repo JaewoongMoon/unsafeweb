@@ -60,22 +60,22 @@
 		conn = DriverManager.getConnection(
 			"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
 		
+            /**************************************************************************/
+            // 세션 처리  
+            Cookie[] cookies = request.getCookies();
+            String userid = "";
+            if(cookies != null){
+                for(int i=0; i < cookies.length; i++){
+	            if(cookies[i].getName().equals("userid")){
+	                userid = cookies[i].getValue();
+	            }
+                }
+            }
+            if(userid.equals("")){
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            }
+            /**************************************************************************/
 		
-		/***************************************************************************/
-		// 세션 처리  
-		Cookie[] cookies = request.getCookies();
-		String userid = "";
-		if(cookies != null){
-			for(int i=0; i < cookies.length; i++){
-				if(cookies[i].getName().equals("userid")){
-					userid = cookies[i].getValue();
-				}
-			}
-		}
-		if(userid.equals("")){
-			response.sendRedirect(request.getContextPath() + "/index.jsp");
-		}
-		/**************************************************************************/
 		
 		// 열람 가능한지 재 체크
 		

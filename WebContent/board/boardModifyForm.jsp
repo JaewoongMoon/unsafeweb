@@ -4,22 +4,22 @@
 <%
 
 Logger log = Logger.getLogger("[게시글 수정]"); 
+//접속한 유저의 권한 확인 
 /***************************************************************************/
 // 세션 처리  
 Cookie[] cookies = request.getCookies();
 String userid = "";
 if(cookies != null){
-	for(int i=0; i < cookies.length; i++){
-		if(cookies[i].getName().equals("userid")){
-			userid = cookies[i].getValue();
-		}
+    for(int i=0; i < cookies.length; i++){
+	if(cookies[i].getName().equals("userid")){
+	    userid = cookies[i].getValue();
 	}
+    }
 }
 if(userid.equals("")){
-	response.sendRedirect(request.getContextPath() + "/index.jsp");
+    response.sendRedirect(request.getContextPath() + "/index.jsp");
 }
-/**************************************************************************/
-
+/***************************************************************************/
 
 
 	// 사용할 객체 초기화

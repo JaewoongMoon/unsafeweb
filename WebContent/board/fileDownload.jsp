@@ -23,6 +23,11 @@ String realDirectory = context.getRealPath("File");
 log.debug("실제 디렉: " + realDirectory);
 */
 try{
+    if(fileName.toLowerCase().endsWith(".jpg") ||
+        fileName.toLowerCase().endsWith(".png") ||
+        fileName.toLowerCase().endsWith(".gif") ||
+        fileName.toLowerCase().endsWith(".jpeg")){
+
 	String filePath = "C:\\Users\\jwmoon\\workspace\\unsafeweb\\WebContent\\fileuploads\\"+fileName;
 	log.debug(filePath + "의 파일스트림을 생성합니다..");
 	File file = new File(filePath);
@@ -56,7 +61,9 @@ try{
 	out2.flush();
 	out2.close();
 	in.close();
-	
+}else{
+    log.debug("비정상 적인 파일 다운로드 요청입니다. :" + fileName);
+}	
 	
 }catch(Exception e){
 	e.printStackTrace();

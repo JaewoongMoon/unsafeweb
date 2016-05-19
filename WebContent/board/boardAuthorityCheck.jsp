@@ -14,21 +14,18 @@ Logger log = Logger.getLogger("[게시글 열람 권한체크]");
 
 String num = request.getParameter("num");  //글번호 
 
-//접속한 유저의 권한 확인 
+
 /***************************************************************************/
 // 세션 처리  
-Cookie[] cookies = request.getCookies();
 String userid = "";
-if(cookies != null){
-	for(int i=0; i < cookies.length; i++){
-		if(cookies[i].getName().equals("userid")){
-			userid = cookies[i].getValue();
-		}
-	}
+if (session.getAttribute("id") == null){
+    response.sendRedirect(request.getContextPath() + "/index.jsp");
+} else{
+    userid = (String)session.getAttribute("id");
 }
-if(userid.equals("")){
-	response.sendRedirect(request.getContextPath() + "/index.jsp");
-}
+/**************************************************************************/
+
+
 
 String sql = "select member_level from member where userid = '" + userid + "'";
 log.debug("쿼리 : " + sql);
