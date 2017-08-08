@@ -18,7 +18,7 @@ public class UserDAO{
 	private Connection conn;
 	
 	public UserDAO (){
-		conn = getConnection("127.0.0.1", "3306", "stonesoup", "root", "ted0201");
+		conn = getConnection("127.0.0.1", "3306", "stonesoup", "root", "ted0201!");
 	}
 
 	public Connection getConnection(String strIP, String strPort, String strDBName, String strUser, String strPass) {

@@ -56,7 +56,7 @@
 		// 데이터베이스 객체 생성
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(
-			"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+			"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 		
 		
 		/***************************************************************************/

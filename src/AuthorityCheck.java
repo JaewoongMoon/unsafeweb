@@ -44,7 +44,7 @@ public class AuthorityCheck {
 		try{
 		
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 			
 			String sql = "select member_level from member where userid = '" + userid + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -67,7 +67,7 @@ public class AuthorityCheck {
 		try{
 		
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 			
 			String sql = "select member_level from member where userid = '" + userid + "'";
 			pstmt = conn.prepareStatement(sql);
@@ -100,7 +100,7 @@ public class AuthorityCheck {
 		try{
 		
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 			
 			String sql = "select is_secret, writer from board where num =  " + num ;
 			pstmt = conn.prepareStatement(sql);
@@ -127,7 +127,7 @@ public class AuthorityCheck {
 		try{
 		
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 			
 			String sql = "select member_level from member where userid = '" + userid + "'";
 			pstmt = conn.prepareStatement(sql);
