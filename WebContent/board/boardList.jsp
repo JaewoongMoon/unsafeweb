@@ -69,7 +69,7 @@
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(
-			"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+			"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 		// 게시물의 총 수를 얻는 쿼리 실행
 		pstmt = conn.prepareStatement("SELECT COUNT(NUM) AS TOTAL FROM BOARD" + countWhereSQL);
 		

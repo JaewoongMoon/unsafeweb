@@ -134,7 +134,7 @@
 	try {
 		// 데이터베이스 객체 생성
 		Class.forName("com.mysql.jdbc.Driver");
-		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 		
 		// 처리 (W:등록, M:수정, D:삭제)
 		if ("W".equals(mode)) {

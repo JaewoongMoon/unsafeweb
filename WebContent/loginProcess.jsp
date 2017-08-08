@@ -21,7 +21,7 @@ if(userid == null || passwd == null){
 	// 데이터베이스 객체 생성
 	Class.forName("com.mysql.jdbc.Driver");
 	conn = DriverManager.getConnection(
-		"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+		"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 	
 	String sql = "SELECT * FROM member "+ 
 			"WHERE userid = '" + userid + "' and passwd = '" + passwd +"'";

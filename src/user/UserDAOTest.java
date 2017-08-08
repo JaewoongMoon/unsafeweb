@@ -32,7 +32,7 @@ public class UserDAOTest {
 	private final String serverIp = "127.0.0.1";
 	private final String serverPort = "3306";
 	private final String userId = "root";
-	private final String passwd = "ted0201";
+	private final String passwd = "ted0201!";
 
 	private UserDAO userDAO;
 	

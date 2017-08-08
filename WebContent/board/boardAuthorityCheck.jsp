@@ -37,7 +37,7 @@ log.debug("쿼리 : " + sql);
 try{
 	Class.forName("com.mysql.jdbc.Driver");
 	conn = DriverManager.getConnection(
-		"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201");
+		"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	
