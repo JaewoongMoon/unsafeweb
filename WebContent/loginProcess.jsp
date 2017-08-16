@@ -3,7 +3,7 @@
 <%@ page import="org.apache.log4j.Logger" %>
 <%
 Logger log = Logger.getLogger("[loginProcess]"); 
-log.debug("=======================================");
+//log.debug("=======================================");
 
 
 Connection conn = null;
@@ -13,11 +13,7 @@ ResultSet rs = null;
 String userid = request.getParameter("userid");
 String passwd = request.getParameter("passwd");
 
-if(userid == null || passwd == null){
-	response.sendRedirect("index.jsp");
-}
-
-//try {
+try {
 	// 데이터베이스 객체 생성
 	Class.forName("com.mysql.jdbc.Driver");
 	conn = DriverManager.getConnection(
@@ -26,14 +22,13 @@ if(userid == null || passwd == null){
 	String sql = "SELECT * FROM member "+ 
 			"WHERE userid = '" + userid + "' and passwd = '" + passwd +"'";
 	
-	log.info("SQL : " + sql);
+	//log.info("SQL : " + sql);
 	pstmt = conn.prepareStatement(sql);
 	//pstmt.setString(1, num);
 	rs = pstmt.executeQuery();
 	
 	if(!rs.next()){
-		//out.println("alert('로그인 실패');");
-		log.info("로그인 실패요~~");
+		//log.info("로그인 실패요~~");
 		%>
 		<script>
 		alert('로그인이 실패하였습니다.');
@@ -46,7 +41,7 @@ if(userid == null || passwd == null){
 		log.info("로그인 성공");
 		HttpSession newSession = request.getSession();
 		//newSession.get
-		log.info("로그인 세션ID : " + newSession.getId());
+		//log.info("로그인 세션ID : " + newSession.getId());
 		
 		Cookie cookie1 = new Cookie("userid", userid);
 //		Cookie cookie2 = new Cookie("passwd", passwd);
@@ -55,6 +50,9 @@ if(userid == null || passwd == null){
 		response.addCookie(cookie1);
 //		response.addCookie(cookie2);
 		response.sendRedirect("board/boardList.jsp");
+		/*
+		RequestDispatcher dd=request.getRequestDispatcher("board/boardList.jsp");
+		dd.forward(request, response);*/
 	}
 
 %>    
@@ -69,12 +67,12 @@ if(userid == null || passwd == null){
 </html>
 
 <%
-/*
+
 } catch (Exception e) {
 		e.printStackTrace();
 	} finally {
 		if (rs != null) rs.close();
 		if (pstmt != null) pstmt.close();
 		if (conn != null) conn.close();
-	}*/
+	}
 %>
