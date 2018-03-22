@@ -20,7 +20,8 @@ try {
 		"jdbc:mysql://127.0.0.1:3306/stonesoup", "root", "ted0201!");
 	
 	String sql = "SELECT * FROM member "+ 
-			"WHERE userid = '" + userid + "' and passwd = '" + passwd +"'";
+			"WHERE userid = '" + userid + 
+			"' and passwd = '" + passwd +"'";
 	
 	//log.info("SQL : " + sql);
 	pstmt = conn.prepareStatement(sql);
@@ -31,14 +32,14 @@ try {
 		//log.info("로그인 실패요~~");
 		%>
 		<script>
-		alert('로그인이 실패하였습니다.');
+		alert('ログインに失敗しました。');
 		history.go(-1);
 		</script>
 		
 		<%
 		//response.sendRedirect("index.jsp");
 	}else{
-		log.info("로그인 성공");
+		//log.info("로그인 성공");
 		HttpSession newSession = request.getSession();
 		//newSession.get
 		//log.info("로그인 세션ID : " + newSession.getId());

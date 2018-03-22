@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%
-	Logger log = Logger.getLogger("[게시글 리스트 보기]"); 
+	Logger log = Logger.getLogger("[投稿リストを見る]"); 
 
 	// 사용할 객체 초기화
 	Connection conn = null;
@@ -90,7 +90,7 @@
 		int endIndex = listCount;
 		String listQuery = "SELECT NUM, SUBJECT, WRITER, REG_DATE, HIT, IS_SECRET FROM BOARD "+whereSQL+" ORDER BY NUM DESC LIMIT " + startIndex +","
 				+ endIndex;
-		log.debug("게시물 조회쿼리 : " + listQuery);
+		log.debug("クエリ : " + listQuery);
 		pstmt = conn.prepareStatement(listQuery);
 		/*
 		if (!"".equals(whereSQL)) {
@@ -122,7 +122,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <script src="<%=request.getContextPath()%>/js/jquery-1.12.3.min.js"></script>
-<title>게시판 목록</title>
+<title>掲示板リスト</title>
 <style type="text/css">
 	* {font-size: 9pt;}
 	p {width: 680px; text-align: right;}
@@ -136,7 +136,7 @@
 	function searchCheck() {
 		var form = document.searchForm;
 		if (form.searchText.value == '') {
-			alert('검색어를 입력하세요.');
+			alert('検索キーワードを入力してください。');
 			form.searchText.focus();
 			return false;
 		}
@@ -160,7 +160,7 @@
 				if(readable.trim() == 'Y'){
 					location.href= "boardView.jsp?num=" +num+"&pageNum="+pageNum+"&searchType="+searchType+"&searchText="+searchText;
 				}else{
-					alert('비밀글입니다.');
+					alert('秘密スレッドです。');
 				}
 			}
 		});
@@ -170,22 +170,22 @@
 </head>
 <body>
 	<div style="margin:auto; width:1000px;">
-	<%= userid %> 님이 로그인하였습니다.  <input type="button" value="로그아웃" onclick="logout();" />
+	<%= userid %> 様がログインしました。 <input type="button" value="ログアウト" onclick="logout();" />
 
 	<form name="searchForm" action="boardList.jsp" method="get" onsubmit="return searchCheck();" >
 	<p>
 		<select name="searchType">
-			<option value="ALL" selected="selected">전체검색</option>
-			<option value="SUBJECT" <%if ("SUBJECT".equals(searchType)) out.print("selected=\"selected\""); %>>제목</option>
-			<option value="WRITER" <%if ("WRITER".equals(searchType)) out.print("selected=\"selected\""); %>>작성자</option>
-			<option value="CONTENTS" <%if ("CONTENTS".equals(searchType)) out.print("selected=\"selected\""); %>>내용</option>
+			<option value="ALL" selected="selected">全検索</option>
+			<option value="SUBJECT" <%if ("SUBJECT".equals(searchType)) out.print("selected=\"selected\""); %>>タイトル</option>
+			<option value="WRITER" <%if ("WRITER".equals(searchType)) out.print("selected=\"selected\""); %>>投稿者</option>
+			<option value="CONTENTS" <%if ("CONTENTS".equals(searchType)) out.print("selected=\"selected\""); %>>内容</option>
 		</select>
-		<input type="text" name="searchText" value="<%=searchTextUTF8%>" />
-		<input type="submit" value="검색" />
+		<input type="text" name="searchText" value="<%=searchTextUTF8%>" style="width:350px;" />
+		<input type="submit" value="検索" />
 	</p>
 	</form>
-	<table border="1" summary="게시판 목록">
-		<caption>게시판 목록</caption>
+	<table border="1" summary="掲示板リスト">
+		<caption>掲示板リスト</caption>
 		<colgroup>
 			<col width="50" />
 			<col width="300" />
@@ -196,12 +196,12 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>등록 일시</th>
-				<th>조회수</th>
-				<th>비밀글</th>
+				<th>番号</th>
+				<th>タイトル</th>
+				<th>投稿者</th>
+				<th>登録日時</th>
+				<th>ヒット</th>
+				<th>秘密</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -210,7 +210,7 @@
 			if (rs == null) {
 			%>
 			<tr>
-				<td align="center" colspan="5">등록된 게시물이 없습니다.</td>
+				<td align="center" colspan="5">登録された記事がありません。</td>
 			</tr>
 			<%
 			} else {
@@ -225,7 +225,7 @@
 					<%=rs.getString("SUBJECT") %></a>					
 				</td>
 				<td align="center"><%=rs.getString("WRITER") %></td>
-				<td align="center"><%=rs.getString("REG_DATE").substring(0, 10) %></td>
+				<td align="center"><%=rs.getString("REG_DATE") %></td>
 				<td align="center"><%=rs.getInt("HIT") %></td>
 				<td align="center">
 					<% if(rs.getString("IS_SECRET").equals("Y")){
@@ -314,8 +314,8 @@
 		</tfoot>
 	</table>
 	<p>
-		<input type="button" value="목록" onclick="goUrl('boardList.jsp');" />
-		<input type="button" value="글쓰기" onclick="goUrl('boardWriteForm.jsp');" />
+		<input type="button" value="リスト" onclick="goUrl('boardList.jsp');" />
+		<input type="button" value="書き込み" onclick="goUrl('boardWriteForm.jsp');" />
 	</p>
 	</div>
 </body>

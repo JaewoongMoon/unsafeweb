@@ -35,7 +35,7 @@ function goJoin(){
 		
 		<br/><br/>
 		
-		<input type="button" value="회원가입" onclick="goJoin();"></input>
+		<input type="button" value="会員登録" onclick="goJoin();"></input>
 	</p>
 	</div>
 </body>
